@@ -136,6 +136,11 @@ jobs:
           #  7zip split archive into 85MB parts
           7z a -p"${{ github.event.inputs.zip_password }}" -mhe=on -mx=3 -v85m "${ARCHIVE_NAME_PREFIX}.7z" "$NEW_ORIGINAL_FILENAME"
 
+          if [ -f "${ARCHIVE_NAME_PREFIX}.7z.001" ] && [ ! -f "${ARCHIVE_NAME_PREFIX}.7z.002" ]; then
+          mv "${ARCHIVE_NAME_PREFIX}.7z.001" "${ARCHIVE_NAME_PREFIX}.7z"
+          echo "Single chunk - renamed to .7z"
+          fi
+          
       - name: Remove original downloaded file
         run: |
           FILE="${{ steps.rename_file.outputs.new_original_filename }}"
