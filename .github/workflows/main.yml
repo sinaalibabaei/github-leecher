@@ -53,8 +53,9 @@ permissions:
   contents: write
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: sci-hub-queue
   cancel-in-progress: false
+  queue: max
 
 jobs:
   leech-split-file:
